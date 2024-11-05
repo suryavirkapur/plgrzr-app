@@ -97,10 +97,13 @@ export default function PdfComparison(): JSX.Element {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch("http://localhost:3001/process-pdf", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      "https://jc84c0wcwsskkccocc4gcso8.13.76.121.152.sslip.io/process-pdf",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
