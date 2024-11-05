@@ -70,7 +70,7 @@ function levenshteinEditDistance(
     }
   }
 
-  return result;
+  return result || 0;
 }
 
 export default function PdfComparison(): JSX.Element {
@@ -116,11 +116,17 @@ export default function PdfComparison(): JSX.Element {
     result1: ProcessingResult,
     result2: ProcessingResult
   ): string => {
-    // This is a simple text comparison - modify based on your needs
     const text1 = Object.values(result1).join(" ");
     const text2 = Object.values(result2).join(" ");
 
-    return `${levenshteinEditDistance(text1, text2, false)}`;
+    const editDistance = levenshteinEditDistance(text1, text2, false);
+    const maxLength = Math.max(text1.length, text2.length);
+    const normalizedSimilarity =
+      maxLength === 0 ? 1 : (maxLength - editDistance) / maxLength;
+
+    return `Edit Distance is ${editDistance} and Normalized Similarity is: ${normalizedSimilarity.toFixed(
+      4
+    )}`;
   };
 
   const handleSubmit = async (): Promise<void> => {
