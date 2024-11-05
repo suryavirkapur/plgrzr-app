@@ -6,7 +6,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const login = async () => {
-    await auth.signIn.email(
+    const { data } = await auth.signIn.email(
       {
         email,
         password,
@@ -23,6 +23,9 @@ export default function Login() {
         },
       }
     );
+    const token = data?.session.id;
+    // Store the token securely (e.g., in localStorage)
+    localStorage.setItem("bearer_token", token || "");
   };
 
   return (
